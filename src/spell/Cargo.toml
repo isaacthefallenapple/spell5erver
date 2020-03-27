@@ -1,0 +1,11 @@
+[package]
+name = "spell"
+version = "0.1.0"
+authors = ["isaacthefallenapple <isaacthefallenapple@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+lazy_static = "1.4.0"

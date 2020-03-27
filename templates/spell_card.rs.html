@@ -1,0 +1,50 @@
+@use super::statics::spell_card_css; @use crate::spell::Spell; @(spell: &Spell)
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>@spell.name()</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/@spell_card_css.name"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600,600i,800,800i&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="spell-card">
+      <span class="title">
+        <h3>@spell.name()</h3>
+        <p>@spell.school_and_level()</p>
+      </span>
+      <ul>
+        <li class="casting-time">
+          Casting Time:&emsp;<span>@spell.casting_time()</span>
+        </li>
+        <li class="range">Range:&emsp;<span>@spell.range()</span></li>
+        <li class="components">
+          Components:&emsp;<span>@spell.components()</span>
+        </li>
+        <li class="duration">Duration:&emsp;<span>@spell.duration()</span></li>
+        <li class="classes">Classes:&emsp;<span>@spell.classes()</span></li>
+      </ul>
+      @for par in spell.paragraphs() {
+      <p>
+        @par
+      </p>
+      }
+      <p class="footnote">Reference: @spell.reference()</p>
+    </div>
+  </body>
+</html>

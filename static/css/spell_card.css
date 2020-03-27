@@ -1,0 +1,50 @@
+* {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.spell-card {
+  width: 450px;
+  margin: auto;
+}
+
+.spell-card .title {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.spell-card .title h3 {
+  font-size: 28pt;
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  display: inline;
+}
+
+.spell-card .title p {
+  padding-top: 0;
+  font-style: italic;
+  color: #606060;
+  margin-left: 5px;
+  display: inline;
+}
+
+.spell-card ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.spell-card ul li {
+  font-size: 11pt;
+  font-weight: 600;
+}
+
+.spell-card ul li span {
+  font-size: medium;
+  font-weight: 400;
+}
+
+.spell-card .footnote {
+  font-size: 9pt;
+  color: #606060;
+}
+/*# sourceMappingURL=spell_card.css.map */

@@ -1,0 +1,16 @@
+[package]
+name = "spell5erver"
+version = "0.1.0"
+authors = ["timob"]
+edition = "2018"
+
+build = "src/build.rs"
+
+[build-dependencies]
+ructe = { version = "0.9.2", features = ["warp02", "sass"] }
+
+[dependencies]
+tokio = { version = "0.2", features = ["macros"] }
+warp = "0.2.0"
+mime = "0.3.0"
+spell = { path = "./src/spell", version = "0.1.0" }
