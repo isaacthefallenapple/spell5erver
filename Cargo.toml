@@ -13,4 +13,5 @@ ructe = { version = "0.9.2", features = ["warp02", "sass"] }
 tokio = { version = "0.2", features = ["macros"] }
 warp = "0.2.0"
 mime = "0.3.0"
-spell = { path = "./src/spell", version = "0.1.0" }
+serde = { version = "1.0", features = ["derive"] }
+lazy_static = "1.4.0"

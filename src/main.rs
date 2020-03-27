@@ -1,7 +1,8 @@
-pub use spell;
 use templates::{statics::StaticFile, RenderRucte};
 use warp::http::{Response, StatusCode};
 use warp::{Filter, Rejection, Reply};
+
+mod spell;
 
 #[tokio::main]
 async fn main() {

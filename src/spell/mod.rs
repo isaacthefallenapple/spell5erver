@@ -1,3 +1,4 @@
+use lazy_static::lazy_static;
 use parts::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
@@ -66,14 +67,6 @@ impl Spell {
         &self.range
     }
 
-    pub fn range_mut(&mut self) -> &mut Range {
-        &mut self.range
-    }
-
-    pub fn set_range(&mut self, range: Range) {
-        self.range = range;
-    }
-
     pub fn components(&self) -> &Components {
         &self.components
     }
@@ -130,7 +123,6 @@ Reference: {}
     }
 }
 
-use lazy_static::lazy_static;
 lazy_static! {
     pub static ref DUMMY: Spell = Spell {
         name: String::from("Zone of Truth"),

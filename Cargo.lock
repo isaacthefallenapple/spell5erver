@@ -1080,20 +1080,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5c2fb2ec9bcd216a5b0d0ccf31ab17b5ed1d627960edff65bbe95d3ce221cefc"
 
 [[package]]
-name = "spell"
-version = "0.1.0"
-dependencies = [
- "lazy_static",
- "serde",
-]
-
-[[package]]
 name = "spell5erver"
 version = "0.1.0"
 dependencies = [
+ "lazy_static",
  "mime 0.3.16",
  "ructe",
- "spell",
+ "serde",
  "tokio",
  "warp",
 ]
