@@ -1,6 +1,6 @@
 use super::*;
 
-#[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize, Clone)]
 pub enum TimeUnit {
     Instantaneous,
     Reaction(String),
@@ -31,7 +31,7 @@ impl Display for TimeUnit {
 
 /// `CastingTime` wraps a `TimeUnit` and a `bool` that indicates
 /// whether or not the spell can be performed as a ritual.
-#[derive(PartialEq, Eq, Debug, Serialize, Deserialize)]
+#[derive(PartialEq, Eq, Debug, Serialize, Deserialize, Clone)]
 pub struct CastingTime(pub TimeUnit, pub bool);
 
 impl PartialOrd for CastingTime {
@@ -57,7 +57,7 @@ impl Display for CastingTime {
 
 /// `Duration` wraps a `TimeUnit` and a `bool` that indicates
 /// whether or not the spell requires concentration.
-#[derive(PartialEq, Eq, Debug, Serialize, Deserialize)]
+#[derive(PartialEq, Eq, Debug, Serialize, Deserialize, Clone)]
 pub struct Duration(pub TimeUnit, pub bool);
 
 impl PartialOrd for Duration {

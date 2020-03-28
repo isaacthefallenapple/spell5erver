@@ -5,7 +5,7 @@ use std::fmt::{self, Display};
 
 mod parts;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]
 pub struct Spell {
     pub(crate) name: String,

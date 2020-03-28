@@ -23,6 +23,14 @@ impl StaticFile {
     }
 }
 
+/// From "C:\\Users\\timob\\Documents\\github.com\\isaacthefallenapple\\spell5erver\\static\\spells.ron"
+#[allow(non_upper_case_globals)]
+pub static spells_ron: StaticFile = StaticFile {
+  content: include_bytes!("C:\\Users\\timob\\Documents\\github.com\\isaacthefallenapple\\spell5erver\\static\\spells.ron"),
+  name: "spells-lo2CYLmg.ron",
+mime: &mime::APPLICATION_OCTET_STREAM,
+};
+
 /// From "C:\\Users\\timob\\Documents\\github.com\\isaacthefallenapple\\spell5erver\\static/css/spell_card.css"
 #[allow(non_upper_case_globals)]
 pub static spell_card_css: StaticFile = StaticFile {
@@ -31,4 +39,4 @@ pub static spell_card_css: StaticFile = StaticFile {
 mime: &mime::TEXT_CSS,
 };
 
-pub static STATICS: &[&StaticFile] = &[&spell_card_css];
+pub static STATICS: &[&StaticFile] = &[&spell_card_css, &spells_ron];
