@@ -25,7 +25,7 @@ impl Spell {
         self.name.as_ref()
     }
 
-    pub fn file_name(&self) -> String {
+    pub fn sanitized_name(&self) -> String {
         self.name()
             .chars()
             .filter_map(|b: char| {
@@ -38,6 +38,10 @@ impl Spell {
                 }
             })
             .collect::<String>()
+    }
+
+    pub fn file_name(&self) -> String {
+        self.sanitized_name()
             .split_ascii_whitespace()
             .collect::<Vec<_>>()
             .join("-")

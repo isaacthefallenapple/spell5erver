@@ -1,14 +1,16 @@
-use index::Db;
+use db::Db;
 pub use templates::{statics::StaticFile, RenderRucte};
 use warp::http::{Response, StatusCode};
 use warp::{Filter, Rejection, Reply};
 
-mod index;
+mod db;
 mod spell;
 
 #[tokio::main]
 async fn main() {
-    let db = index::build_db();
+    let db = db::build();
+    let index = db::index::build(db.clone()).await;
+    println!("{:?}", index);
     let routes = warp::get()
         .and(
             warp::path("spell")
