@@ -1,31 +1,79 @@
-use db::Db;
+use db::{
+    index::{Indexer, SpellIndex},
+    Db,
+};
+use serde::Deserialize;
+use std::sync::Arc;
 pub use templates::{statics::StaticFile, RenderRucte};
-use warp::http::{Response, StatusCode};
-use warp::{Filter, Rejection, Reply};
+use tokio::sync::Mutex;
+use warp::{
+    http::{Response, StatusCode},
+    Filter, Rejection, Reply,
+};
 
 mod db;
 mod spell;
 
+pub type Idx = Arc<Mutex<Indexer>>;
+
 #[tokio::main]
 async fn main() {
-    let db = db::build();
-    let index = db::index::build(db.clone()).await;
-    println!("{:?}", index);
-    let routes = warp::get()
-        .and(
-            warp::path("spell")
-                .and(warp::path::param())
-                .and(with_db(db))
-                .and_then(spell_page),
-        )
-        .or(warp::path("static")
-            .and(warp::path::param())
-            .and_then(static_file));
+    let db = db::build("./static/spells.ron");
+    let idx = Indexer::new(SpellIndex::new("./tantivy").expect("spellindex")).expect("indexer");
+    let routes = filters::routes(db, idx);
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+}
+
+mod filters {
+    use super::*;
+    use warp::Filter;
+
+    pub fn routes(
+        db: Db,
+        idx: Idx,
+    ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+        index()
+            .or(spell(db.clone()))
+            .or(search(idx.clone()))
+            .or(static_file())
+    }
+
+    pub fn index() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+        warp::path::end().and(warp::fs::file("./static/html/index.html"))
+    }
+
+    pub fn spell(
+        db: Db,
+    ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+        warp::path("spell")
+            .and(warp::path::param())
+            .and(with_db(db))
+            .and_then(spell_page)
+    }
+
+    pub fn search(
+        idx: Idx,
+    ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+        warp::path("search")
+            .and(warp::query())
+            .and(with_idx(idx))
+            .and_then(super::search)
+    }
+
+    pub fn static_file() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
+    {
+        warp::path("static")
+            .and(warp::path::param())
+            .and_then(super::static_file)
+    }
 }
 
 fn with_db(db: Db) -> impl Filter<Extract = (Db,), Error = std::convert::Infallible> + Clone {
     warp::any().map(move || db.clone())
+}
+
+fn with_idx(idx: Idx) -> impl Filter<Extract = (Idx,), Error = std::convert::Infallible> + Clone {
+    warp::any().map(move || idx.clone())
 }
 
 async fn spell_page(name: String, db: Db) -> Result<impl Reply, Rejection> {
@@ -46,6 +94,20 @@ async fn static_file(name: String) -> Result<impl Reply, Rejection> {
     } else {
         Err(warp::reject::not_found())
     }
+}
+
+async fn search(query: Query, idx: Idx) -> Result<impl Reply, Rejection> {
+    let idx = idx.lock().await;
+    if let Ok(results) = idx.index.search(&query.q) {
+        Ok(format!("{:?}", results))
+    } else {
+        Err(warp::reject())
+    }
+}
+
+#[derive(Deserialize)]
+struct Query {
+    q: String,
 }
 
 include!(concat!(env!("OUT_DIR"), "/templates.rs"));
