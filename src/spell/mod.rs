@@ -3,7 +3,7 @@ use parts::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
 
-mod parts;
+pub mod parts;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "PascalCase")]

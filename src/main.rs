@@ -34,7 +34,7 @@ mod filters {
     ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
         index()
             .or(spell(db.clone()))
-            .or(search(idx.clone()))
+            .or(search(idx.clone(), db.clone()))
             .or(static_file())
     }
 
@@ -53,10 +53,12 @@ mod filters {
 
     pub fn search(
         idx: Idx,
+        db: Db,
     ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
         warp::path("search")
             .and(warp::query())
             .and(with_idx(idx))
+            .and(with_db(db))
             .and_then(super::search)
     }
 
@@ -96,10 +98,12 @@ async fn static_file(name: String) -> Result<impl Reply, Rejection> {
     }
 }
 
-async fn search(query: Query, idx: Idx) -> Result<impl Reply, Rejection> {
+async fn search(query: Query, idx: Idx, db: Db) -> Result<impl Reply, Rejection> {
     let idx = idx.lock().await;
     if let Ok(results) = idx.index.search(&query.q) {
-        Ok(format!("{:?}", results))
+        let db = db.lock().await;
+        let spells: Vec<_> = results.iter().map(|s| &db[s]).collect();
+        Response::builder().html(|o| templates::search_results(o, &query.q, &spells))
     } else {
         Err(warp::reject())
     }

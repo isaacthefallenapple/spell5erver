@@ -1,0 +1,68 @@
+@use super::statics::spell_card_css; @use crate::spell::Spell; @(query: &str,
+spells: &[&Spell])
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>@query</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/@spell_card_css.name"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600,600i,800,800i&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Level</th>
+        <th>School</th>
+        <th>Components</th>
+        <th>Casting Time</th>
+        <th>Range</th>
+        <th>Duration</th>
+        <th>Classes</th>
+      </tr>
+      @for spell in spells.iter() {
+      <tr>
+        <td>
+          <a href="spell/@spell.file_name()">@spell.name()</a>
+        </td>
+        <td>
+          @format!("{:#?}", spell.level())
+        </td>
+        <td>
+          @spell.school()
+        </td>
+        <td>
+          @spell.components()
+        </td>
+        <td>
+          @spell.casting_time()
+        </td>
+        <td>
+          @spell.range()
+        </td>
+        <td>
+          @spell.duration()
+        </td>
+        <td>
+          @spell.classes()
+        </td>
+      </tr>
+      }
+    </table>
+  </body>
+</html>

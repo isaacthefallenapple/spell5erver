@@ -1,6 +1,6 @@
 use super::*;
 
-#[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize, Clone, Copy)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Clone, Copy)]
 pub struct Level(pub u32);
 
 impl Display for Level {
@@ -13,6 +13,20 @@ impl Display for Level {
             2 => write!(f, "2nd level"),
             3 => write!(f, "3rd level"),
             n => write!(f, "{}th level", n),
+        }
+    }
+}
+
+impl Debug for Level {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if f.alternate() {
+            if let &Level(0) = self {
+                write!(f, "Cantrip")
+            } else {
+                write!(f, "{}", self.0)
+            }
+        } else {
+            f.debug_tuple("Level").field(&self.0).finish()
         }
     }
 }
