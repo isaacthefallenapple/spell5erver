@@ -28,17 +28,14 @@
         <span class="name">@spell.name()</span>
         <span class="school-level">@spell.school_and_level()</span>
       </div>
-      <ul>
-        <li class="casting-time">
-          <span class="inline-heading">Casting Time</span>:&emsp;@spell.casting_time()
-        </li>
-        <li class="range"><span class="inline-heading">Range</span>:&emsp;@spell.range()</li>
-        <li class="components">
-          <span class="inline-heading">Components</span>:&emsp;@spell.components()
-        </li>
-        <li class="duration"><span class="inline-heading">Duration</span>:&emsp;@spell.duration()</li>
-        <li class="classes"><span class="inline-heading">Classes</span>:&emsp;@spell.classes()</li>
-      </ul>
+      <div class="stats-container">
+        <span class="inline-heading">Casting Time</span><span>@spell.casting_time()</span>
+        <span class="inline-heading">Range</span><span>@spell.range()</span>
+        <span class="inline-heading">Components</span><span>@spell.components()</span>
+        <span class="inline-heading">Duration</span><span>@spell.duration()</span>
+        <span class="inline-heading">Classes</span><span>@spell.classes()</span>
+      </div>
+      
       @for par in spell.paragraphs() {
       <p>
         @par

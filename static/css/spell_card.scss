@@ -37,6 +37,17 @@ $secondary: #606060;
     font-weight: 600;
   }
 
+  .stats-container {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-template-rows: repeat(5, auto);
+    column-gap: 1em;
+
+    .inline-heading {
+      justify-self: end;
+    }
+  }
+
   ul {
     list-style-type: none;
     margin: 0;
