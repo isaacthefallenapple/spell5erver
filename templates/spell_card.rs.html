@@ -24,25 +24,35 @@
 
   <body>
     <div class="spell-card">
-      <span class="title">
-        <h3>@spell.name()</h3>
-        <p>@spell.school_and_level()</p>
-      </span>
+      <div class="title">
+        <span class="name">@spell.name()</span>
+        <span class="school-level">@spell.school_and_level()</span>
+      </div>
       <ul>
         <li class="casting-time">
-          Casting Time:&emsp;<span>@spell.casting_time()</span>
+          <span class="inline-heading">Casting Time</span>:&emsp;@spell.casting_time()
         </li>
-        <li class="range">Range:&emsp;<span>@spell.range()</span></li>
+        <li class="range"><span class="inline-heading">Range</span>:&emsp;@spell.range()</li>
         <li class="components">
-          Components:&emsp;<span>@spell.components()</span>
+          <span class="inline-heading">Components</span>:&emsp;@spell.components()
         </li>
-        <li class="duration">Duration:&emsp;<span>@spell.duration()</span></li>
-        <li class="classes">Classes:&emsp;<span>@spell.classes()</span></li>
+        <li class="duration"><span class="inline-heading">Duration</span>:&emsp;@spell.duration()</li>
+        <li class="classes"><span class="inline-heading">Classes</span>:&emsp;@spell.classes()</li>
       </ul>
       @for par in spell.paragraphs() {
       <p>
         @par
       </p>
+      }
+      @if let Some(mut at_higher_levels) = spell.at_higher_levels() {
+        <p>
+          <span class="inline-heading">At higher levels</span>. @at_higher_levels.next().unwrap()
+        </p>
+        @for par in at_higher_levels {
+        <p>
+          @par
+        </p>
+        } 
       }
       <p class="footnote">Reference: @spell.reference()</p>
     </div>

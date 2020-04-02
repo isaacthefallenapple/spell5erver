@@ -1,52 +1,50 @@
 $secondary: #606060;
 
 * {
-    font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
 }
 
 .spell-card {
-    width: 450px;
-    margin: auto;
+  width: 450px;
+  margin: auto;
 
-    .title {
-        display: block;
-        margin-bottom: 10px;
+  .title {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 
-        h3 {
-            font-size: 28pt;
-            font-family: 'Roboto', sans-serif;
-            padding: 0;
-            display: inline;
-        }
-    
-        p {
-            padding-top: 0;
-            font-style: italic;
-            color: $secondary;
-            margin-left: 5px;
-            display: inline;
-        }
-
+    .name {
+      font-size: 28pt;
+      font-family: "Roboto", sans-serif;
+      font-weight: 900;
+      white-space: nowrap;
+      margin-right: 10px;
     }
 
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-
-        li {
-            font-size: 11pt;
-            font-weight: 600;
-            
-            span {
-                font-size: medium;
-                font-weight: 400;
-            }
-        }
+    .school-level {
+      font-style: italic;
+      color: $secondary;
+      white-space: nowrap;
+      position: relative;
+      bottom: 0;
     }
+  }
 
-    .footnote {
-        font-size: 9pt;
-        color: $secondary;
-    }
+  .inline-heading {
+    font-size: 11pt;
+    font-weight: 600;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footnote {
+    font-size: 9pt;
+    color: $secondary;
+  }
 }

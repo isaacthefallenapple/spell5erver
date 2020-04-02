@@ -18,6 +18,7 @@ pub type Idx = Arc<Mutex<Indexer>>;
 
 #[tokio::main]
 async fn main() {
+    // spell::transform_spells("./static/spells.ron");
     let db = db::build("./static/spells.ron");
     let idx = Indexer::new(SpellIndex::new("./tantivy").expect("spellindex")).expect("indexer");
     let routes = filters::routes(db, idx);
