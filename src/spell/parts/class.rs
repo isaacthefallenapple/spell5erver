@@ -1,4 +1,5 @@
 use super::*;
+use std::ops::{BitAnd, BitOr};
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize, Clone, Copy)]
 pub enum Class {
@@ -38,8 +39,32 @@ impl ClassSet {
         self.0 &= !(1 << class as u32);
     }
 
-    pub fn contains(&self, class: Class) -> bool {
+    pub fn contains(self, class: Class) -> bool {
         self.0 >> class as u32 & 1 == 1
+    }
+
+    pub fn is_empty(self) -> bool {
+        self.0 == 0
+    }
+
+    pub fn has_intersection(self, other: Self) -> bool {
+        (self & other).is_empty()
+    }
+}
+
+/// `BitAnd (&)` returns the intersection of two `ClassSet`s.
+impl BitAnd for ClassSet {
+    type Output = Self;
+    fn bitand(self, rhs: Self) -> Self {
+        ClassSet(self.0 & rhs.0)
+    }
+}
+
+/// `BitOr (|)` returns the union of two `ClassSet`s.
+impl BitOr for ClassSet {
+    type Output = Self;
+    fn bitor(self, rhs: Self) -> Self {
+        ClassSet(self.0 | rhs.0)
     }
 }
 
