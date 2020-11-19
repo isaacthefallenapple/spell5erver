@@ -1,0 +1,80 @@
+@use super::statics::{filter_form_js, index_css};
+@use crate::spell::parts::*;
+@()
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Spell5</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600,600i,800,800i&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/@index_css.name"
+    />
+    <script src="/static/@filter_form_js.name" defer></script>
+  </head>
+    <form role="search" id="search" action="/search" method="get">
+      <input autofocus autocapitalize="off" autocorrect="off" autocomplete="off" tabindex="1" type="search" name="q">
+      <button type="submit">Search</button>
+
+      <details>
+        <summary>Filters</summary>
+        <ul>
+          <li>
+            <details>
+              <summary>Classes</summary>
+              <fieldset id="filter-set-classes" class="any-of">
+                <div class="fieldset-container">
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-bard" value="@Class::Bard.to_ron().unwrap()"><label for="filter-classes-bard">Bard</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-cleric" value="@Class::Cleric.to_ron().unwrap()"><label for="filter-classes-cleric">Cleric</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-druid" value="@Class::Druid.to_ron().unwrap()"><label for="filter-classes-druid">Druid</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-paladin" value="@Class::Paladin.to_ron().unwrap()"><label for="filter-classes-paladin">Paladin</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-ranger" value="@Class::Ranger.to_ron().unwrap()"><label for="filter-classes-ranger">Ranger</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-sorcerer" value="@Class::Sorcerer.to_ron().unwrap()"><label for="filter-classes-sorcerer">Sorcerer</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-warlock" value="@Class::Warlock.to_ron().unwrap()"><label for="filter-classes-warlock">Warlock</label>
+                  <input type="checkbox" checked name="filter-classes" id="filter-classes-wizard" value="@Class::Wizard.to_ron().unwrap()"><label for="filter-classes-wizard">Wizard</label>
+                </div>
+              </fieldset>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Schools</summary>
+              <fieldset id="filter-set-schools" class="any-of">
+                <div class="fieldset-container">
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-abjuration" value="@School::Abjuration.to_ron().unwrap()"><label for="filter-schools-abjuration">Abjuration</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-conjuration" value="@School::Conjuration.to_ron().unwrap()"><label for="filter-schools-conjuration">Conjuration</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-divination" value="@School::Divination.to_ron().unwrap()"><label for="filter-schools-divination">Divination</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-enchantment" value="@School::Enchantment.to_ron().unwrap()"><label for="filter-schools-enchantment">Enchantment</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-evocation" value="@School::Evocation.to_ron().unwrap()"><label for="filter-schools-evocation">Evocation</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-illusion" value="@School::Illusion.to_ron().unwrap()"><label for="filter-schools-illusion">Illusion</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-necromancy" value="@School::Necromancy.to_ron().unwrap()"><label for="filter-schools-necromancy">Necromancy</label>
+                  <input type="checkbox" checked name="filter-schools" id="filter-schools-transmutation" value="@School::Transmutation.to_ron().unwrap()"><label for="filter-schools-transmutation">Transmutation</label>
+                </div>
+              </fieldset>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Components</summary>
+              <fieldset class="any-of">
+                <div class="fieldset-container">
+                  <input type="checkbox" checked name="filter-components" id="filter-components-v" value="v"><label for="filter-components-v">V</label>
+                  <input type="checkbox" checked name="filter-components" id="filter-components-s" value="s"><label for="filter-components-s">S</label>
+                  <input type="checkbox" checked name="filter-components" id="filter-components-m" value="m"><label for="filter-components-m">M</label>
+                </div>
+              </fieldset>
+            </details>
+          </li>
+        </ul>
+      </details>
+    </form>
+
+    <button id="post-button">Click Me, You Asshole, I dare you, I double dare you</button>
+  </body>
+</html>
