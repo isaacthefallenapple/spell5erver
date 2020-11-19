@@ -1,19 +1,18 @@
 use crate::spell::Spell;
-use std::sync::Arc;
-use std::{fs, path::Path};
+use std::{collections::HashMap, fs, path::Path, sync::Arc};
 use tokio::sync::Mutex;
 
-pub type Db = Arc<Mutex<im::HashMap<String, Spell>>>;
+pub type Db = Arc<HashMap<String, Spell>>;
 
 pub fn build(path: impl AsRef<Path>) -> Db {
     let data = fs::File::open(path.as_ref()).expect("spells.ron not found");
     let spells: Vec<Spell> = ron::de::from_reader(data).expect("serialization failed");
-    let mut map = im::HashMap::new();
+    let mut map = HashMap::new();
     for spell in spells {
         let fname = spell.file_name().to_string();
         map.insert(fname, spell);
     }
-    Arc::new(Mutex::new(map))
+    Arc::new(map)
 }
 
 pub mod index {
@@ -21,7 +20,7 @@ pub mod index {
     use std::{fs, path::Path};
     use tantivy::{collector::TopDocs, query::QueryParser, schema::*, Index, IndexWriter};
 
-    pub type Idx = Arc<Mutex<Indexer>>;
+    pub type Idx = Arc<Indexer>;
 
     pub struct SpellIndex {
         name: Field,
@@ -95,10 +94,10 @@ pub mod index {
 
     impl Indexer {
         pub fn new(index: SpellIndex) -> tantivy::Result<Idx> {
-            Ok(Arc::new(Mutex::new(Self {
+            Ok(Arc::new(Self {
                 writer: index.tantivy_index.writer(50_000_000)?,
                 index,
-            })))
+            }))
         }
 
         pub fn add(&mut self, spell: &Spell) {
