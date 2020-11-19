@@ -17,6 +17,34 @@ pub enum Class {
     Wizard,
 }
 
+impl From<Class> for u32 {
+    fn from(c: Class) -> Self {
+        1 << c as u32
+    }
+}
+
+pub const CASTERS: ClassSet = ClassSet(0b111011001110);
+
+impl Class {
+    pub fn to_ron(&self) -> ron::ser::Result<String> {
+        ron::ser::to_string(self)
+    }
+}
+
+impl BitOr for Class {
+    type Output = ClassSet;
+    fn bitor(self, rhs: Self) -> Self::Output {
+        ClassSet(u32::from(self) | u32::from(rhs))
+    }
+}
+
+impl FromStr for Class {
+    type Err = ron::de::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        ron::de::from_str(s)
+    }
+}
+
 impl Display for Class {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         Debug::fmt(self, f)
@@ -24,7 +52,7 @@ impl Display for Class {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, Clone, Copy)]
-pub struct ClassSet(u32);
+pub struct ClassSet(pub(crate) u32);
 
 impl ClassSet {
     pub fn new() -> Self {
@@ -32,15 +60,15 @@ impl ClassSet {
     }
 
     pub fn add(&mut self, class: Class) {
-        self.0 |= 1 << class as u32;
+        self.0 |= u32::from(class);
     }
 
     pub fn remove(&mut self, class: Class) {
-        self.0 &= !(1 << class as u32);
+        self.0 &= !(u32::from(class));
     }
 
     pub fn contains(self, class: Class) -> bool {
-        self.0 >> class as u32 & 1 == 1
+        self.0 & u32::from(class) == 1
     }
 
     pub fn is_empty(self) -> bool {
@@ -48,7 +76,15 @@ impl ClassSet {
     }
 
     pub fn has_intersection(self, other: Self) -> bool {
-        (self & other).is_empty()
+        !(self & other).is_empty()
+    }
+}
+
+impl BitOr<Class> for ClassSet {
+    type Output = Self;
+    fn bitor(mut self, rhs: Class) -> Self::Output {
+        self.add(rhs);
+        self
     }
 }
 

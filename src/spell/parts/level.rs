@@ -1,7 +1,13 @@
 use super::*;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, Clone, Copy)]
-pub struct Level(pub u32);
+pub struct Level(pub(crate) u32);
+
+impl Level {
+    pub fn to_ron(&self) -> ron::ser::Result<String> {
+        ron::ser::to_string(self)
+    }
+}
 
 impl Display for Level {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -14,6 +20,13 @@ impl Display for Level {
             3 => write!(f, "3rd level"),
             n => write!(f, "{}th level", n),
         }
+    }
+}
+
+impl FromStr for Level {
+    type Err = ron::de::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        ron::de::from_str(s)
     }
 }
 

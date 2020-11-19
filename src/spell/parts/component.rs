@@ -2,9 +2,9 @@ use super::*;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Components {
-    v: bool,
-    s: bool,
-    m: Option<String>,
+    pub(crate) v: bool,
+    pub(crate) s: bool,
+    pub(crate) m: Option<String>,
 }
 
 impl Components {
@@ -14,6 +14,17 @@ impl Components {
             s,
             m: m.map(|s| s.to_string()),
         }
+    }
+
+    pub fn to_ron(&self) -> ron::ser::Result<String> {
+        ron::ser::to_string(self)
+    }
+}
+
+impl FromStr for Components {
+    type Err = ron::de::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        ron::de::from_str(s)
     }
 }
 
@@ -55,6 +66,19 @@ pub enum Component {
     V,
     S,
     M(String),
+}
+
+impl Component {
+    pub fn to_ron(&self) -> ron::ser::Result<String> {
+        ron::ser::to_string(self)
+    }
+}
+
+impl FromStr for Component {
+    type Err = ron::de::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        ron::de::from_str(s)
+    }
 }
 
 impl Display for Component {

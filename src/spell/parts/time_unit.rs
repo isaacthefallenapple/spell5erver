@@ -12,6 +12,19 @@ pub enum TimeUnit {
     Other(String),
 }
 
+impl TimeUnit {
+    pub fn to_ron(&self) -> ron::ser::Result<String> {
+        ron::ser::to_string(self)
+    }
+}
+
+impl FromStr for TimeUnit {
+    type Err = ron::de::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        ron::de::from_str(s)
+    }
+}
+
 impl Display for TimeUnit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         use TimeUnit::*;

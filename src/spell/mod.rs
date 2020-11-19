@@ -4,6 +4,7 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Display};
 
+pub mod filters;
 pub mod parts;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
