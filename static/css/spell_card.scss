@@ -1,61 +1,61 @@
 $secondary: #606060;
 
 * {
-  font-family: "Fira Sans", sans-serif;
+    font-family: "Fira Sans", sans-serif;
 }
 
 .spell-card {
-  width: 450px;
-  margin: auto;
+    width: 450px;
+    margin: auto;
 
-  .title {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
+    .title {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
 
-    .name {
-      font-size: 28pt;
-      font-family: "Roboto", sans-serif;
-      font-weight: 900;
-      white-space: nowrap;
-      margin-right: 10px;
+        .name {
+            font-size: 28pt;
+            font-family: "Roboto", sans-serif;
+            font-weight: 900;
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+
+        .school-level {
+            font-style: italic;
+            color: $secondary;
+            white-space: nowrap;
+            position: relative;
+            bottom: 0;
+        }
     }
-
-    .school-level {
-      font-style: italic;
-      color: $secondary;
-      white-space: nowrap;
-      position: relative;
-      bottom: 0;
-    }
-  }
-
-  .inline-heading {
-    font-size: 11pt;
-    font-weight: 600;
-  }
-
-  .stats-container {
-    display: grid;
-    grid-template-columns: max-content auto;
-    grid-template-rows: repeat(5, auto);
-    column-gap: 1em;
 
     .inline-heading {
-      justify-self: end;
+        font-size: 11pt;
+        font-weight: 600;
     }
-  }
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
+    .stats-container {
+        display: grid;
+        grid-template-columns: max-content auto;
+        grid-template-rows: repeat(5, auto);
+        column-gap: 1em;
 
-  .footnote {
-    font-size: 9pt;
-    color: $secondary;
-  }
+        .inline-heading {
+            justify-self: end;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .footnote {
+        font-size: 9pt;
+        color: $secondary;
+    }
 }
